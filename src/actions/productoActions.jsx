@@ -4,7 +4,11 @@ import {
     AGREGAR_PRODUCTO_ERROR,
     COMENZAR_DESCARGA_PRODUCTOS,
     DESCARGA_PRODUCTOS_EXITO,
-    DESCARGA_PRODUCTOS_ERROR
+    DESCARGA_PRODUCTOS_ERROR,
+    OBTENER_PRODUCTO_ELIMINAR,
+    PRODUCTO_ELIMINADO_EXITO,
+    PRODUCTO_ELIMINADO_ERROR
+
 } from '../types'
 import clienteAxios from "../config/axios";
 import Swal from "sweetalert2";
@@ -64,7 +68,7 @@ export function obtenerProductosAction() {
             console.log(e)
             //Si hay un error cambia el state
             dispatch(descargarProductosError(true))
-            Swal.fire('Error', 'Hubo un error intenta de nuevo', "error")
+            await Swal.fire('Error', 'Hubo un error intenta de nuevo', "error")
 
 
         }
@@ -85,6 +89,51 @@ const descargarProductosExitosa = (productos) => ({
 
 //si hubo un error
 const descargarProductosError = (estado) => ({
-    type: AGREGAR_PRODUCTO_ERROR,
+    type: DESCARGA_PRODUCTOS_ERROR,
     payload: estado
 });
+
+
+//Funcion que selecciona y elimina el producto----------------------------------------
+export function borrarProductoAction(id) {
+    return async (dispatch) => {
+        dispatch(obtenerProductoEliminar(id));
+        try {
+            //Eliminar de la API
+            await clienteAxios.delete(`/productos/${id}`)
+
+            //Si todo sale bien, actualizar el state
+            dispatch(eliminarProductoExito())
+
+            //Mostrar mensaje de confirmacion
+            await Swal.fire(
+                'Eliminado!',
+                'El producto ha sido eliminado.',
+                'success'
+            )
+
+        } catch (e) {
+            console.log(e)
+            //Si hay un error cambia el state
+            dispatch(eliminarProductoError(true))
+            await Swal.fire('Error', 'Hubo un error intenta de nuevo', "error")
+
+
+        }
+    }
+
+}
+
+const obtenerProductoEliminar = id => ({
+    type: OBTENER_PRODUCTO_ELIMINAR,
+    payload: id
+})
+
+const eliminarProductoExito=()=>({
+    type:PRODUCTO_ELIMINADO_EXITO,
+})
+
+const eliminarProductoError=(estado)=>({
+    type:PRODUCTO_ELIMINADO_EXITO,
+    payload:estado
+})
