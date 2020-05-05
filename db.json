@@ -1,0 +1,14 @@
+{
+  "productos": [
+    {
+      "nombre": "hot dog",
+      "precio": "6",
+      "id": 1
+    },
+    {
+      "nombre": "papas",
+      "precio": 50,
+      "id": 2
+    }
+  ]
+}
