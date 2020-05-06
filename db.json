@@ -1,14 +1,19 @@
 {
   "productos": [
     {
-      "nombre": "hot dog",
-      "precio": "6",
+      "nombre": "Perro",
+      "precio": "5000",
       "id": 1
     },
     {
-      "nombre": "papas",
-      "precio": 50,
+      "nombre": "Papas",
+      "precio": "3000",
       "id": 2
+    },
+    {
+      "nombre": "Hamburguesa",
+      "precio": 6000,
+      "id": 3
     }
   ]
 }
